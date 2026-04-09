@@ -4,22 +4,20 @@ const userPhotoInput = document.getElementById("userPhoto");
 
 // 2. Handle Image Selection using the onchange Event
 userPhotoInput.onchange = function() {
-    // FIX: Get the FIRST file from FileList using index [0]
-    const selectedFile = userPhotoInput.files[0];  // ← This was the issue!
-
-    // Logic Branching: Ensure a file was actually selected
-    if (selectedFile) {  // ← Check single file, not FileList
-        const reader = new FileReader();
+    // Check if files exist AND first file is valid
+    if (userPhotoInput.files && userPhotoInput.files.length > 0) {
+        const selectedFile = userPhotoInput.files[0];
         
-        reader.onload = function(e) {
-            // Find the image element in the DOM Tree
-            const previewImage = document.getElementById("viewImg");
-            // Change the attribute value to show the preview
-            previewImage.src = e.target.result; 
-        };
-        
-        // Now passes single File object (not FileList)
-        reader.readAsDataURL(selectedFile);
+        // Optional: Validate image type
+        if (selectedFile.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("viewImg").src = e.target.result;
+            };
+            reader.readAsDataURL(selectedFile);
+        } else {
+            alert('Please select an image file!');
+        }
     }
 };
 
