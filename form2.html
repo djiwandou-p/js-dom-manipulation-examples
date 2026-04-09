@@ -1,0 +1,20 @@
+<!-- page.html -->
+<div class="form-container">
+    <h2>Event Registration</h2>
+    <form id="registrationForm">
+        <input type="text" id="fullName" placeholder="Enter Full Name">
+        <!-- Input type="date" acts as a native Datepicker -->
+        <input type="date" id="eventDate">
+        <input type="file" id="userPhoto" accept="image/*">
+        <button type="button" id="submitBtn">Submit and Preview</button>
+    </form>
+
+    <!-- Preview Section: Initially hidden using CSS style manipulation -->
+    <div id="previewSection" style="display:none; border-top: 2px solid #ddd; margin-top: 20px;">
+        <h3>Submission Preview</h3>
+        <p><strong>Name:</strong> <span id="viewName"></span></p>
+        <p><strong>Date:</strong> <span id="viewDate"></span></p>
+        <img id="viewImg" src="" alt="Uploaded Preview" style="width:200px; border-radius: 8px;">
+    </div>
+</div>
+<script src="form2.js"></script>
