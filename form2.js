@@ -1,45 +1,41 @@
-// 1. Finding HTML elements by ID [9]
+// 1. Finding HTML elements by ID
 const submitBtn = document.getElementById("submitBtn");
 const userPhotoInput = document.getElementById("userPhoto");
 
-// 2. Handle Image Selection using the onchange Event [10]
+// 2. Handle Image Selection using the onchange Event
 userPhotoInput.onchange = function() {
-    // SYSTEMATIC FIX: Access index  to get the individual File object
-    const selectedFile = userPhotoInput.files; 
+    // FIX: Get the FIRST file from FileList using index [0]
+    const selectedFile = userPhotoInput.files[0];  // ← This was the issue!
 
-    // Logic Branching: Ensure a file was actually selected [4]
-    if (selectedFile) {
+    // Logic Branching: Ensure a file was actually selected
+    if (selectedFile) {  // ← Check single file, not FileList
         const reader = new FileReader();
         
         reader.onload = function(e) {
-            // Find the image element in the DOM Tree [5]
+            // Find the image element in the DOM Tree
             const previewImage = document.getElementById("viewImg");
-            // Change the attribute value to show the preview [6]
+            // Change the attribute value to show the preview
             previewImage.src = e.target.result; 
         };
         
-        // Pass the single File object, not the entire list
+        // Now passes single File object (not FileList)
         reader.readAsDataURL(selectedFile);
     }
 };
 
-// 3. Handle Form Submission using the onclick Event [12]
+// 3. Handle Form Submission (unchanged)
 submitBtn.onclick = function() {
-    // Creating an Object to store the data systematically [13, 14]
     const submissionData = {
         name: document.getElementById("fullName").value,
         date: document.getElementById("eventDate").value
     };
 
-    // 4. Logic Branching: Ensure fields are not empty [15]
     if (submissionData.name === "" || submissionData.date === "") {
         alert("Please fill in all fields!");
     } else {
-        // 5. Change HTML Content and Styles [4, 16]
         document.getElementById("viewName").innerHTML = submissionData.name;
         document.getElementById("viewDate").innerHTML = submissionData.date;
         
-        // Changing CSS display property to show the hidden section [16]
         document.getElementById("previewSection").style.display = "block";
         document.getElementById("previewSection").style.padding = "15px";
     }
